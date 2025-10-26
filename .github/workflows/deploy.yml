@@ -22,4 +22,4 @@ jobs:
           username: root
           key: ${{ secrets.SSH_KEY }}
           source: "build/*"
-          target: "/var/www/starnetworksolution.com/"
+          target: "/var/www/starnetworksolution.com/build/"
