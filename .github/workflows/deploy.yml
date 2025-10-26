@@ -1,0 +1,25 @@
+name: Deploy to Linode
+on:
+  push:
+    branches: [ main ]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Build site
+        run: |
+          corepack enable
+          pnpm install
+          pnpm run build
+      - name: Upload to Linode
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.LINODE_IP }}
+          username: root
+          key: ${{ secrets.SSH_KEY }}
+          source: "dist/*"
+          target: "/var/www/starnetworksolution.com/"
